@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <queue>
 #include "bullet.h"
 #include "player.h"
 
@@ -14,7 +15,7 @@ class game {
         void                render (void);
     private:
         Player player;
-        Bullet bullet;
+        std::vector<Bullet> bullets;
 };
 
 game::game ():
@@ -50,8 +51,8 @@ void game::processEvents (void) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     mWindow.close();
                 } else if (event.key.code == sf::Keyboard::Space) {
-                    bullet.setPosition(player.getPosition().x, player.getPosition().y);
-                    bullet.shoot(mWindow, player.getPosition(), sf::Mouse());
+                    Bullet bullet(mWindow, player.getPosition(), sf::Mouse(), "img/bullet.png");
+                    bullets.push_back(bullet);
                 }
                 player.handlePlayerInput(event.key.code, true);
                 break;
@@ -69,14 +70,29 @@ void game::processEvents (void) {
 // Update method
 void game::update (sf::Time deltaTime) {
     player.update(mWindow, sf::Mouse(), deltaTime);
-    bullet.update(deltaTime);
+    for (int i = 0; i < bullets.size(); i++) {
+        bullets[i].update(deltaTime);
+    }
+    for (std::vector<Bullet>::iterator i = bullets.begin(); i < bullets.end(); i++) {
+        if ((*i).getPosition().x > mWindow.getSize().x ||
+            (*i).getPosition().x < 0 ||
+            (*i).getPosition().y > mWindow.getSize().y ||
+            (*i).getPosition().y < 0) {
+            bullets.erase(i);
+            std::cout << "Erased!" << std::endl;
+        }
+    }
+    std::cout << bullets.size() << std::endl;
     return;
 }
 
 // Render method
 void game::render (void) {
     mWindow.clear();
-    mWindow.draw(bullet);
+    for (int i = 0; i < bullets.size(); i++) {
+            mWindow.draw(bullets[i]);
+    }
+    //mWindow.draw(bullet);
     mWindow.draw(player);
     mWindow.display();
     return;
