@@ -29,8 +29,6 @@ void Player::handlePlayerInput(sf::Keyboard::Key key, bool isPressed) {
         isMovingLeft = isPressed;
     else if (key == sf::Keyboard::D)
         isMovingRight = isPressed;
-    //else if (key == sf::Keyboard::Space && isPressed == true)
-    //    std::cout << "Spacebar pressed..." << std::endl;
     return;
 }
 
