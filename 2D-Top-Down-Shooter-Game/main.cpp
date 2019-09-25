@@ -79,7 +79,7 @@ void game::update (sf::Time deltaTime) {
             (*i).getPosition().y > mWindow.getSize().y ||
             (*i).getPosition().y < 0) {
             bullets.erase(i);
-            std::cout << "Erased!" << std::endl;
+            std::cout << "Object Erased!" << std::endl;
         }
     }
     std::cout << bullets.size() << std::endl;
