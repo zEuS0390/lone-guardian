@@ -10,7 +10,7 @@ class Bullet: public Sprite {
         sf::Vector2f aimDir;
         sf::Vector2f aimDirNorm;
     public:
-                Bullet      (sf::RenderWindow&, const sf::Vector2f&, sf::Mouse, const std::string);
+                Bullet      (sf::RenderWindow&, const sf::Vector2f&, sf::Mouse);
         void    update      (sf::Time);
         void    shoot       (sf::RenderWindow&, const sf::Vector2f&, sf::Mouse);
         void    moveBullet        (sf::Time);

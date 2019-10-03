@@ -5,8 +5,8 @@
 #include <SFML/Graphics.hpp>
 #include <string>
 
-Bullet::Bullet(sf::RenderWindow& window, const sf::Vector2f& position, sf::Mouse mouse, const std::string fileLocation):
-Sprite(fileLocation){
+Bullet::Bullet(sf::RenderWindow& window, const sf::Vector2f& position, sf::Mouse mouse):
+Sprite("img/bullet.png"){
     setPosition(position.x, position.y);
     shoot(window, position, mouse);
 }

@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <list>
 #include <queue>
 #include "bullet.h"
 #include "player.h"
@@ -15,7 +16,7 @@ class game {
         void                render (void);
     private:
         Player player;
-        std::vector<Bullet> bullets;
+        std::list<Bullet> bullets;
 };
 
 game::game ():
@@ -51,7 +52,7 @@ void game::processEvents (void) {
                 if (event.key.code == sf::Keyboard::Escape) {
                     mWindow.close();
                 } else if (event.key.code == sf::Keyboard::Space) {
-                    Bullet bullet(mWindow, player.getPosition(), sf::Mouse(), "img/bullet.png");
+                    Bullet bullet(mWindow, player.getPosition(), sf::Mouse());
                     bullets.push_back(bullet);
                 }
                 player.handlePlayerInput(event.key.code, true);
@@ -70,27 +71,27 @@ void game::processEvents (void) {
 // Update method
 void game::update (sf::Time deltaTime) {
     player.update(mWindow, sf::Mouse(), deltaTime);
-    for (int i = 0; i < bullets.size(); i++) {
-        bullets[i].update(deltaTime);
+    for (std::list<Bullet>::iterator i = bullets.begin(); i != bullets.end(); i++) {
+        (*i).update(deltaTime);
     }
-    for (std::vector<Bullet>::iterator i = bullets.begin(); i < bullets.end(); i++) {
+    for (std::list<Bullet>::iterator i = bullets.begin(); i != bullets.end(); i++) {
         if ((*i).getPosition().x > mWindow.getSize().x ||
             (*i).getPosition().x < 0 ||
             (*i).getPosition().y > mWindow.getSize().y ||
             (*i).getPosition().y < 0) {
             bullets.erase(i);
+            i = bullets.begin();
             std::cout << "Object Erased!" << std::endl;
         }
     }
-    std::cout << bullets.size() << std::endl;
     return;
 }
 
 // Render method
 void game::render (void) {
     mWindow.clear();
-    for (int i = 0; i < bullets.size(); i++) {
-            mWindow.draw(bullets[i]);
+    for (std::list<Bullet>::iterator i = bullets.begin(); i != bullets.end(); i++) {
+        mWindow.draw(*i);
     }
     //mWindow.draw(bullet);
     mWindow.draw(player);
