@@ -13,8 +13,7 @@ Sprite::Sprite(const std::string fileLocation)
 }
 
 void Sprite::loadFile(sf::Image &img, const std::string fileLocation) {
-    if (!img.loadFromFile(fileLocation)) {
+    if (!img.loadFromFile(fileLocation))
         std::cout << "Error loading image!" << std::endl;
-    }
     return;
 }

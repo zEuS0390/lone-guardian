@@ -13,12 +13,10 @@ Sprite("img/bullet.png"){
 
 void Bullet::moveBullet (sf::Time deltaTime) {
     move(aimDirNorm*deltaTime.asSeconds()*500.0f);
-    return;
 }
 
 void Bullet::update(sf::Time deltaTime) {
     moveBullet(deltaTime);
-    return;
 }
 
 void Bullet::shoot (sf::RenderWindow& window, const sf::Vector2f& playerPos, sf::Mouse mouse) {
@@ -28,5 +26,4 @@ void Bullet::shoot (sf::RenderWindow& window, const sf::Vector2f& playerPos, sf:
     aimDirNorm.x = aimDir.x / aimDir.x*cos(angle);
     aimDirNorm.y = aimDir.y / aimDir.y*sin(angle);
     std::cout << "Aim Position: [" << aimDir.x << ", " << aimDir.y << "]" << std::endl;
-    return;
 }
