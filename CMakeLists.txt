@@ -7,6 +7,8 @@ project(SFML_2D_TOP_DOWN_SHOOTER)
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 
+option(BUILD_SHARED_LIBS "Build Shared Libs" OFF)
+
 set(APP_SRC_FILES
 	src/main.cpp
 	src/bullet.cpp
@@ -35,3 +37,13 @@ add_custom_command(
 	TARGET ${PROJECT_NAME} 
 	PRE_BUILD 
 	COMMAND ${CMAKE_COMMAND} -E copy_directory ${PROJECT_SOURCE_DIR}/img $<TARGET_FILE_DIR:SFML_2D_TOP_DOWN_SHOOTER>/img)
+
+# Additional copy for Windows (specifically openal32.dll)
+if (CMAKE_SYSTEM_NAME MATCHES "Windows")
+	add_custom_command(
+		TARGET ${PROJECT_NAME}
+		PRE_BUILD
+		COMMAND ${CMAKE_COMMAND} -E copy ${SFML_SOURCE_DIR}/extlibs/bin/$<IF:$<EQUAL:${CMAKE_SIZEOF_VOID_P},8>,x64,x86>/openal32.dll $<TARGET_FILE_DIR:${PROJECT_NAME}>
+		VERBATIM)
+endif()
+
