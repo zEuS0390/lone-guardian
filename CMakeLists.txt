@@ -18,11 +18,15 @@ set(APP_SRC_FILES
 # Set output directory for binaries
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
 
+set(FETCHCONTENT_QUIET FALSE)
+
 # Include SFML using FetchContent
 include(FetchContent)
 FetchContent_Declare(SFML
 	GIT_REPOSITORY https://github.com/SFML/SFML.git
-	GIT_TAG 2.6.x)
+	GIT_TAG 2.6.x
+	GIT_PROGRESS TRUE
+)
 FetchContent_MakeAvailable(SFML)
 
 # Configure build
